@@ -1,13 +1,13 @@
 <template>
   <div class="body">
     <div class="login-container d-flex align-items-center justify-content-center">
-      <form class="login-form text-center">
+      <form @submit.prevent="signInReq" class="login-form text-center">
         <h1 class="mb-5 font-wight-light text-uppercase">Login</h1>
         <div class="form-group">
-          <input type="text" class="form-control rounded-pill form-control-lg" placeholder="email">
+          <input v-model="email" type="text" class="form-control rounded-pill form-control-lg" placeholder="email">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control rounded-pill form-control-lg" placeholder="password">
+          <input v-model="password" type="password" class="form-control rounded-pill form-control-lg" placeholder="password">
         </div>
         <div class="forgot-link d-flex align-items-center justify-content-between">
           <div class="form-check">
@@ -25,10 +25,26 @@
 </template>
 
 <script>
+import firebase from "firebase";
 export default {
   name: "SignIn_Form",
   data() {
-    return {}
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    signInReq(){
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+          (res)=>{
+            alert(`Sign in successfully as ${res.user.email}`)
+          },
+          (err)=>{
+            alert(`Error- ${err.message}`)
+          }
+      )
+    }
   }
 }
 </script>
