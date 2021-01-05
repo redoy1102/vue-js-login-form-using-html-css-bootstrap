@@ -17,7 +17,8 @@
           <a href="#">Forgot Password?</a>
         </div>
         <button type="submit" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Login</button>
-        <p class="mt-3 font-weight-normal">Don't have an account? <a href="#"><strong>Register Now!</strong></a></p>
+        <br> <br>
+        <router-link to="/register" class="mt-3 "> Don't have an account? <strong>Register Now!</strong></router-link>
       </form>
     </div>
   </div>
@@ -25,7 +26,7 @@
 
 <script>
 export default {
-  name: "Register_Form",
+  name: "SignIn_Form",
   data() {
     return {}
   }
