@@ -2,7 +2,7 @@
   <div class="body">
     <div class="login-container d-flex align-items-center justify-content-center">
       <form class="login-form text-center">
-        <h1 class="mb-5 font-wight-light text-uppercase">Register Now!</h1>
+        <h1 class="mb-5 font-wight-light text-uppercase">Login</h1>
         <div class="form-group">
           <input type="text" class="form-control rounded-pill form-control-lg" placeholder="email">
         </div>
@@ -14,10 +14,10 @@
             <input type="checkbox" class="form-check-input" id="remember">
             <lable for="remember">Remember Password</lable>
           </div>
-<!--          <a href="#">Forgot Password?</a>-->
+          <a href="#">Forgot Password?</a>
         </div>
-        <button type="submit" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Sign Up</button>
-<!--        <p class="mt-3 font-weight-normal">Don't have an account? <a href="#"><strong>Register Now!</strong></a></p>-->
+        <button type="submit" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Login</button>
+        <p class="mt-3 font-weight-normal">Don't have an account? <a href="#"><strong>Register Now!</strong></a></p>
       </form>
     </div>
   </div>
