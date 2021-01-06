@@ -11,7 +11,9 @@
         </div>
         <div class="form-group">
           <input v-model="password" type="password" class="form-control rounded-pill form-control-lg" placeholder="password">
-          {{passwordError}}
+          <div>
+            {{passwordError}}
+          </div>
         </div>
         <div class="forgot-link d-flex align-items-center justify-content-between">
           <div class="form-check">
