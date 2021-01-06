@@ -5,9 +5,13 @@
         <h1 class="mb-5 font-wight-light text-uppercase">Login</h1>
         <div class="form-group">
           <input v-model="email" type="text" class="form-control rounded-pill form-control-lg" placeholder="email">
+          <div>
+            {{emailError}}
+          </div>
         </div>
         <div class="form-group">
           <input v-model="password" type="password" class="form-control rounded-pill form-control-lg" placeholder="password">
+          {{passwordError}}
         </div>
         <div class="forgot-link d-flex align-items-center justify-content-between">
           <div class="form-check">
@@ -16,7 +20,7 @@
           </div>
           <a href="#">Forgot Password?</a>
         </div>
-        <button type="submit" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Login</button>
+        <button type="submit" :disabled="!validForm" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Login</button>
         <br> <br>
         <router-link to="/register" class="mt-3 "> Don't have an account? <strong>Register Now!</strong></router-link>
       </form>
@@ -26,24 +30,53 @@
 
 <script>
 import firebase from "firebase";
+
 export default {
   name: "SignIn_Form",
   data() {
     return {
       email: '',
       password: '',
+      emailError: '',
+      passwordError: '',
     }
   },
   methods: {
-    signInReq(){
+    signInReq() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-          (res)=>{
+          (res) => {
             alert(`Sign in successfully as ${res.user.email}`)
           },
-          (err)=>{
+          (err) => {
             alert(`Error- ${err.message}`)
           }
       )
+    },
+    validateEmail() {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(this.email);
+    }
+  },
+  computed: {
+    validForm(){
+      return this.email.length > 0 && this.validateEmail() && this.password.length >= 6
+    }
+  },
+  watch: {
+    email() {
+      if (!this.validateEmail()) {
+        this.emailError = 'Invalid Email'
+      } else{
+        this.emailError = ''
+      }
+    },
+    password(){
+      if (this.password.length < 6){
+        this.passwordError = 'Password must be 6 character'
+      }
+      else{
+        this.passwordError = ''
+      }
     }
   }
 }
@@ -76,9 +109,10 @@ export default {
   color: #666;
 }
 
-.login-form a:hover{
+.login-form a:hover {
   color: #723dbe;
 }
+
 .form-control {
   font-size: 15px;
   min-height: 48px;
@@ -99,7 +133,7 @@ export default {
   margin-bottom: 0;
 }
 
-.btn-custom{
+.btn-custom {
   background: #723dbe;
   border-color: #723dbe;
   color: #fff;
@@ -111,13 +145,13 @@ export default {
 .btn-custom:focus,
 .btn-custom:hover,
 .btn-custom:active,
-.btn-custom:active:focus{
+.btn-custom:active:focus {
   background: #54229d;
   border-color: #54229d;
   color: #fff;
 }
 
-.btn-custom:focus{
+.btn-custom:focus {
   box-shadow: 0 0 0 0.2rem rgba(114, 61, 190, .25);
 }
 </style>

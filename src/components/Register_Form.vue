@@ -22,8 +22,8 @@
         </div>
         <button type="submit" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Sign Up</button>
         <br><br>
-        <p>Registration Successful !!</p>
-
+        <p v-if="successful" >Registration Successful !!</p>
+        <p class="errMessage" v-if="errorMessage" >Something went wrong!!</p>
       </form>
     </div>
   </div>
@@ -38,17 +38,18 @@ export default {
     return {
       email: '',
       password: '',
+      successful: false,
+      errorMessage: false,
     }
   },
   methods: {
     submitRequest() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-          (res) => {
-            alert(`Registration Successful as ${res.user.email}`)
-
+          () => {
+            this.successful = true
           },
-          (err) => {
-            alert(`Error- ${err.message}`)
+          () => {
+            this.errorMessage = true
           }
       )
     }
@@ -60,6 +61,9 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
+.errMessage{
+  color: red;
+}
 form p{
   color: green;
   font-weight: bold;
