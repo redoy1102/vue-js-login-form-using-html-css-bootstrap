@@ -38,18 +38,14 @@ export default {
     return {
       email: '',
       password: '',
-      reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     }
   },
   methods: {
     submitRequest() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
           (res) => {
-            alert(`Please enter correct email`)
-            if (!this.reg.test(res.user.email)){
-              // console.log('Please enter correct email')
+            alert(`Registration Successful as ${res.user.email}`)
 
-            }
           },
           (err) => {
             alert(`Error- ${err.message}`)
