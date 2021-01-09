@@ -6,23 +6,32 @@
         <div class="form-group">
           <input v-model="email" type="text" class="form-control rounded-pill form-control-lg" placeholder="email">
           <div>
-            {{emailError}}
+            {{ emailError }}
           </div>
         </div>
         <div class="form-group">
-          <input v-model="password" type="password" class="form-control rounded-pill form-control-lg" placeholder="password">
+          <input v-model="password" type="password" class="form-control rounded-pill form-control-lg"
+                 placeholder="password">
           <div>
-            {{passwordError}}
+            {{ passwordError }}
           </div>
         </div>
         <div class="forgot-link d-flex align-items-center justify-content-between">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id="remember">
-            <lable for="remember">Remember Password</lable>
+            <label for="remember">Remember Password</label>
           </div>
           <a href="#">Forgot Password?</a>
         </div>
-        <button type="submit" :disabled="!validForm" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Login</button>
+        <button type="submit" :disabled="!validForm"
+                class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Login
+        </button>
+        <div v-if="successfulLogin">
+          <p>Login successfully</p>
+        </div>
+        <div v-if="failedLogin">
+          <p>Please input correct email</p>
+        </div>
         <br> <br>
         <router-link to="/register" class="mt-3 "> Don't have an account? <strong>Register Now!</strong></router-link>
       </form>
@@ -41,16 +50,18 @@ export default {
       password: '',
       emailError: '',
       passwordError: '',
+      successfulLogin: false,
+      failedLogin: false,
     }
   },
   methods: {
     signInReq() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-          (res) => {
-            alert(`Sign in successfully as ${res.user.email}`)
+          () => {
+            this.successfulLogin = true
           },
-          (err) => {
-            alert(`Error- ${err.message}`)
+          () => {
+            this.failedLogin = true
           }
       )
     },
@@ -60,7 +71,7 @@ export default {
     }
   },
   computed: {
-    validForm(){
+    validForm() {
       return this.email.length > 0 && this.validateEmail() && this.password.length >= 6
     }
   },
@@ -68,15 +79,14 @@ export default {
     email() {
       if (!this.validateEmail()) {
         this.emailError = 'Invalid Email'
-      } else{
+      } else {
         this.emailError = ''
       }
     },
-    password(){
-      if (this.password.length < 6){
+    password() {
+      if (this.password.length < 6) {
         this.passwordError = 'Password must be 6 character'
-      }
-      else{
+      } else {
         this.passwordError = ''
       }
     }

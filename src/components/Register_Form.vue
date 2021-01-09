@@ -9,21 +9,27 @@
         <!--        </div>-->
         <div class="form-group">
           <input v-model="email" type="text" class="form-control rounded-pill form-control-lg" placeholder="email">
+          <div>
+            {{ emailError }}
+          </div>
         </div>
         <div class="form-group">
           <input v-model="password" type="password" class="form-control rounded-pill form-control-lg"
                  placeholder="password">
+          <div>
+            {{ passwordError }}
+          </div>
         </div>
         <div class="forgot-link d-flex align-items-center justify-content-between">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id="remember">
-            <lable for="remember">Remember Password</lable>
+            <label for="remember">Remember Password</label>
           </div>
         </div>
         <button type="submit" class="btn  btn-custom btn-block text-uppercase rounded-pill btn-lg">Sign Up</button>
         <br><br>
-        <p v-if="successful" >Registration Successful !!</p>
-        <p class="errMessage" v-if="errorMessage" >Something went wrong!!</p>
+        <p v-if="successful">Registration Successful !!</p>
+        <p class="errMessage" v-if="errorMessage">Something went wrong!!</p>
       </form>
     </div>
   </div>
@@ -40,6 +46,8 @@ export default {
       password: '',
       successful: false,
       errorMessage: false,
+      emailError: '',
+      passwordError: '',
     }
   },
   methods: {
@@ -52,19 +60,40 @@ export default {
             this.errorMessage = true
           }
       )
-    }
-  }
+    },
+    validateEmail() {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(this.email);
+    },
+  },
 
+  watch: {
+    email() {
+      if (!this.validateEmail()) {
+        this.emailError = 'Please enter correct email'
+      } else {
+        this.emailError = ''
+      }
+    },
+    password() {
+      if (this.password.length < 6) {
+        this.passwordError = 'Password must be 6 character'
+      } else {
+        this.passwordError = ''
+      }
+    },
+  }
 }
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
-.errMessage{
+.errMessage {
   color: red;
 }
-form p{
+
+form p {
   color: green;
   font-weight: bold;
 }
